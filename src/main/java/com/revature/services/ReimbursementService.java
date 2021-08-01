@@ -13,8 +13,16 @@ public class ReimbursementService {
 	public List<Reimbursement> getAll(){
 		return reimbDAO.getAll();
 	}
+	
+	public List<Reimbursement> getUserReimbursements(String username){
+		return reimbDAO.getAllByUser(username);
+	}
 
 	public Reimbursement getOne(int reimb_id) {
 		return reimbDAO.getOne(reimb_id);
+	}
+
+	public boolean addReimbursement(Reimbursement reimbursement) {
+		return reimbDAO.addReimbursement(reimbursement);
 	}
 }

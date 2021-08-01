@@ -196,4 +196,50 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 		return 0;
 	}
 
+	@Override
+	public List<Reimbursement> getAllByUser(String username) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+			String sql = "SELECT r.reimb_id ,r.amount, r.submitted, r.resolved, r.description,"
+					+ "a.username AS author, m.username AS resolver, s.reimb_status AS status , t.reimb_type AS reimb_type "
+					+ "FROM reimbursements r "
+					+ "INNER JOIN reimbursement_status s "
+					+ "ON r.status_id = s.reimb_status_id "
+					+ "INNER JOIN reimbursement_types t "
+					+ "ON r.reimb_type = t.reimb_type_id "
+					+ "INNER JOIN users a "
+					+ "ON r.author= a.user_id "
+					+ "LEFT JOIN users m "
+					+ "ON r.resolver = m.user_id "
+					+ "WHERE a.username = ?";
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setString(1, username);
+			
+			ResultSet result = statement.executeQuery();
+			
+			List<Reimbursement> list = new ArrayList<>();
+			
+			while(result.next()) {
+				Reimbursement reimb = new Reimbursement();
+				reimb.setReimb_id(result.getInt("reimb_id"));
+				reimb.setAmount(result.getDouble("amount"));
+				reimb.setSubmitted(result.getDate("submitted").toString());
+				reimb.setResolved((result.getDate("resolved") != null) ? result.getDate("resolved").toString():"");
+				reimb.setDescription(result.getString("description"));
+				reimb.setAuthor(result.getString("author"));
+				reimb.setResolver(result.getString("resolver"));
+				reimb.setStatus(result.getString("status"));
+				reimb.setReimb_type(result.getString("reimb_type"));
+				
+				list.add(reimb);
+			}
+			
+			return list;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

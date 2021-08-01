@@ -7,6 +7,7 @@ import com.revature.models.Reimbursement;
 public interface ReimbursementDAO {
 
 	public List<Reimbursement> getAll();
+	public List<Reimbursement> getAllByUser(String username);
 	public Reimbursement getOne(int reimb_id);
 	public int getStatusId(String status);
 	public int getTypeId(String type);

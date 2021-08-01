@@ -36,12 +36,19 @@ public class FrontControllerServlet extends HttpServlet{
 					}
 					else if(request.getMethod().equals("POST")) {
 					//call reimbursement controller to create new reimbursement
+						reimbController.addReimbursment(request, response);
 					}
 				}
 				else if(UrlSections.length == 2) {
 					if(request.getMethod().equals("GET")) {
 						//Get reimbursement of id UrlSections[1]
-						reimbController.getOneReimbursement(response, Integer.parseInt(UrlSections[1]));
+						try {
+							int parameter = Integer.parseInt(UrlSections[1]);
+							reimbController.getOneReimbursement(response, parameter);
+						}catch(NumberFormatException e) {
+							reimbController.getUserReimbursements(response, UrlSections[1]);
+						}
+						
 					}
 					else if(request.getMethod().equals("PATCH")) {
 					//call reimbursement controller to update the reimbursement of id UrlSections[1]
@@ -49,9 +56,15 @@ public class FrontControllerServlet extends HttpServlet{
 				}
 				break;
 			case "login":
-				if(request.getMethod().equals("GET")) {
-					userController.login();
+				if(UrlSections.length == 1) {
+					//TODO: Change method to POST
+					if(request.getMethod().equals("POST")) {
+						userController.login(request,response);
+					}
 				}
+				break;
+			case "user-reimbursement":
+				
 		}	
 	}
 	
