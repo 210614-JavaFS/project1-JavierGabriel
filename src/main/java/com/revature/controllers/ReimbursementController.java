@@ -83,4 +83,27 @@ public class ReimbursementController {
 		}
 		
 	}
+	
+	public void updateStatus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		BufferedReader reader = request.getReader();
+		
+		StringBuilder stringBuilder = new StringBuilder();
+		
+		String line = reader.readLine();
+		
+		while(line != null){
+			stringBuilder.append(line);
+			line = reader.readLine();
+		}
+		
+		String body = new String(stringBuilder);
+		
+		Reimbursement reimbursement = objectMapper.readValue(body, Reimbursement.class);
+		
+		if(reimbService.updateStatus(reimbursement.getReimb_id(), reimbursement.getStatus(), reimbursement.getResolver())) {
+			response.setStatus(200);
+		}else {
+			response.setStatus(406);
+		}
+	}
 }

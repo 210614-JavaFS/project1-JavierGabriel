@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.revature.controllers.ReimbursementController;
 import com.revature.controllers.UserController;
@@ -30,6 +31,11 @@ public class FrontControllerServlet extends HttpServlet{
 		
 		switch(UrlSections[0]) {
 			case "reimbursement":
+				response.setStatus(401);
+				HttpSession session = request.getSession(false);
+				if(session == null) {
+					return;
+				}
 				if(UrlSections.length == 1) {
 					if(request.getMethod().equals("GET")) {
 						reimbController.getAllReimbursements(response);
@@ -39,6 +45,7 @@ public class FrontControllerServlet extends HttpServlet{
 						reimbController.addReimbursment(request, response);
 					}
 				}
+				//user sends a path parameter
 				else if(UrlSections.length == 2) {
 					if(request.getMethod().equals("GET")) {
 						//Get reimbursement of id UrlSections[1]
@@ -46,12 +53,13 @@ public class FrontControllerServlet extends HttpServlet{
 							int parameter = Integer.parseInt(UrlSections[1]);
 							reimbController.getOneReimbursement(response, parameter);
 						}catch(NumberFormatException e) {
+							//user sent a string in path parameter
 							reimbController.getUserReimbursements(response, UrlSections[1]);
 						}
 						
 					}
-					else if(request.getMethod().equals("PATCH")) {
-					//call reimbursement controller to update the reimbursement of id UrlSections[1]
+					else if(request.getMethod().equals("PUT")) {
+						reimbController.updateStatus(request, response);
 					}
 				}
 				break;
@@ -63,13 +71,17 @@ public class FrontControllerServlet extends HttpServlet{
 					}
 				}
 				break;
-			case "user-reimbursement":
 				
 		}	
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		doGet(request, response);
+	}
+	
+	@Override
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		doGet(request, response);
 	}
 

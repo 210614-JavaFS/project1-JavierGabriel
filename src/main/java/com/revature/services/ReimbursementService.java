@@ -25,4 +25,8 @@ public class ReimbursementService {
 	public boolean addReimbursement(Reimbursement reimbursement) {
 		return reimbDAO.addReimbursement(reimbursement);
 	}
+	
+	public boolean updateStatus(int reimb_id, String status, String resolver) {
+		return reimbDAO.updateStatus(reimb_id, status, resolver);
+	}
 }

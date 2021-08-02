@@ -130,15 +130,17 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 	}
 
 	@Override
-	public boolean updateStatus(int reimb_id, int status, int resolver) {
+	public boolean updateStatus(int reimb_id, String status, String resolver) {
 		try (Connection conn = ConnectionUtil.getConnection()){
+			int status_id = getStatusId(status);
+			int resolver_id = userDao.getUserId(resolver);
 			
-			String sql = "UPDATE reimbursements SET status_id = ?, resolver = ? WHERE reimb_id = ?";
+			String sql = "UPDATE reimbursements SET status_id = ?, resolver = ?, resolved=NOW() WHERE reimb_id = ?";
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
 			int index = 0;
-			statement.setInt(++index, status);
-			statement.setInt(++index, resolver);
+			statement.setInt(++index, status_id);
+			statement.setInt(++index, resolver_id);
 			statement.setInt(++index, reimb_id);
 			statement.execute();
 			

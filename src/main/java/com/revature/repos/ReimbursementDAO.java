@@ -12,6 +12,6 @@ public interface ReimbursementDAO {
 	public int getStatusId(String status);
 	public int getTypeId(String type);
 	public boolean addReimbursement(Reimbursement reimbursement);
-	public boolean updateStatus(int reimb_id, int status, int resolver);
+	public boolean updateStatus(int reimb_id, String status, String resolver);
 	public List<Reimbursement> getByStatus(int status);
 }

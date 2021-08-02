@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phoenix ERS</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/loggedInCheckers/employeeLoggedIn.js"></script>
+</head>
+<body id="content" class="bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="http://localhost:8080/frontend/employee">Phoenix ERS Home</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav col align-self-end">
+          <div class="col-sm-11"></div>
+          <button class="btn btn-danger col-sm-1" id="logout-button">Logout</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+      <div class="container-fluid text-light ">
+          <h1 id="welcome-msg">Welcome Employee</h1>
+          <br>
+          
+          <div class="row justify-content-center text-center">
+            <h2>Your Reimbursement Requests</h2>
+          </div>
+          <div class="row">
+            <div class="col">
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Submit New Request
+              </button> 
+              <button type="button" id="refresh-button" class="btn btn-primary">
+                Refresh List
+              </button>
+              <br>
+              <br>
+            </div>
+          </div>
+            <table class="table table-light">
+              <thead>
+                <tr>
+                  <th scope="col-1">ID</th>
+                  <th scope="col-1">Amount</th>
+                  <th scope="col-1">Date Submitted</th>
+                  <th scope="col-1">Date Resolved</th>
+                  <th scope="col-4">Description</th>
+                  <th scope="col-1">Status</th>
+                  <th scope="col-1">Request Type</th>
+                  <th scope="col-1">Resolver</th>
+                </tr>
+              </thead>
+              <tbody id="reimbTable">
+                
+              </tbody>
+            </table>
+          
+          
+  
+      </div><!-- /.container -->
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Reimbursement Request</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="form-control" id="request-form" method="post">
+                <div class="row">
+                  <label class="col-4" for="requested-amount">Amount to Request:</label>
+                  <input class="col-8" type="number" id="requested-amount" name="requested-amount" min=".01" step=".01" required>
+                </div>
+                <br>
+                <div class="row">
+                  <label class="col-4" for="request-description">Request Description:</label>
+                  <textarea class="col-8" id="request-description" name="request-description"></textarea>
+                </div>
+                <br>
+                <div class="row">
+                  <label class="col-4" for="request-type">Request Type:</label>
+                  <select class="col-8" name="request-type" id="request-type" required>
+                    <option value="lodging">Lodging</option>
+                    <option value="food">Food</option>
+                    <option value="travel">Travel</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="../assets/js/employee.js"></script>
+</body>
+</html>
